@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DPP · PoltronAI · Relax Pro R1</title>
+<style>
+  :root {
+    --teal: #1cb8b8;
+    --ink: #1a1a2e;
+    --mid: #4a4a6a;
+    --light: #7b7b9a;
+    --bone: #f7f5f0;
+    --white: #fff;
+    --border: #e4e0d8;
+    --green: #4caf7d;
+    --amber: #f0a04b;
+    --purple: #7c6aaf;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: var(--bone); color: var(--ink); font-size: 15px; }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    padding: 24px 20px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(28,184,184,0.12);
+  }
+  .brand { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+  .logo {
+    width:38px; height:38px; border-radius:8px;
+    background:var(--teal); display:flex; align-items:center; justify-content:center;
+    font-weight:900; font-size:18px; color:var(--ink); flex-shrink:0;
+  }
+  .brand-text h1 { color:#fff; font-size:17px; font-weight:700; }
+  .brand-text p  { color:rgba(255,255,255,0.45); font-size:11px; margin-top:1px; }
+
+  .product-badge {
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:10px; padding:14px 16px;
+  }
+  .product-badge h2 { color:#fff; font-size:20px; font-weight:800; line-height:1.2; }
+  .product-badge .sku { color:var(--teal); font-size:12px; font-weight:600;
+                        letter-spacing:1px; margin-top:4px; }
+  .reg-pill {
+    display:inline-flex; align-items:center; gap:5px;
+    margin-top:10px; background:rgba(28,184,184,0.18);
+    border:1px solid rgba(28,184,184,0.35); border-radius:20px;
+    padding:4px 11px; font-size:11px; color:var(--teal); font-weight:600;
+  }
+
+  /* ID BAR */
+  .id-bar {
+    background:#fff; border-bottom:1px solid var(--border);
+    display:grid; grid-template-columns:1fr 1fr;
+  }
+  .id-cell {
+    padding:12px 16px; border-right:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+  }
+  .id-cell:nth-child(2n){ border-right:none; }
+  .id-label { font-size:10px; font-weight:700; letter-spacing:1px;
+              text-transform:uppercase; color:var(--light); }
+  .id-val { font-size:13px; font-weight:600; color:var(--ink); margin-top:2px; }
+  .id-val.teal { color:var(--teal); }
+
+  /* SECTIONS */
+  .section { padding:20px 16px 4px; }
+  .section-title {
+    font-size:11px; font-weight:700; letter-spacing:1.5px;
+    text-transform:uppercase; color:var(--light);
+    margin-bottom:12px; display:flex; align-items:center; gap:8px;
+  }
+  .section-title::after { content:''; flex:1; height:1px; background:var(--border); }
+
+  /* CARDS */
+  .card {
+    background:#fff; border-radius:12px;
+    border:1px solid var(--border); margin-bottom:10px;
+    overflow:hidden;
+  }
+  .card-head {
+    padding:12px 16px; display:flex; align-items:center; gap:10px;
+    border-bottom:1px solid var(--border);
+  }
+  .card-head .icon {
+    width:30px; height:30px; border-radius:7px;
+    display:flex; align-items:center; justify-content:center; font-size:14px;
+    flex-shrink:0;
+  }
+  .icon-teal   { background:#e0f7f7; }
+  .icon-amber  { background:#fdf0e0; }
+  .icon-purple { background:#f0ecf9; }
+  .card-head h3 { font-size:14px; font-weight:700; }
+  .card-body { padding:4px 0; }
+  .item {
+    padding:9px 16px; border-bottom:1px solid #f5f3ef;
+    font-size:13px; line-height:1.5; color:var(--mid);
+    display:flex; gap:8px; align-items:flex-start;
+  }
+  .item:last-child { border-bottom:none; }
+  .dot { width:6px; height:6px; border-radius:50%; margin-top:6px; flex-shrink:0; }
+  .item b { color:var(--ink); font-weight:600; }
+
+  /* KPI GRID */
+  .kpi-grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:10px; padding:0 16px;
+  }
+  .kpi {
+    background:#fff; border-radius:12px;
+    border:1px solid var(--border);
+    padding:14px 12px; text-align:center;
+    position:relative; overflow:hidden;
+  }
+  .kpi::before {
+    content:''; position:absolute;
+    top:0; left:0; right:0; height:3px;
+  }
+  .kpi.k1::before { background:var(--teal); }
+  .kpi.k2::before { background:var(--green); }
+  .kpi.k3::before { background:var(--amber); }
+  .kpi.k4::before { background:var(--purple); }
+  .kpi-val { font-size:26px; font-weight:800; color:var(--ink); line-height:1; }
+  .kpi-lbl { font-size:11px; color:var(--light); margin-top:4px; line-height:1.3; }
+
+  /* TIMELINE */
+  .timeline { padding:0 16px; }
+  .tl-item {
+    display:flex; gap:12px; padding-bottom:16px;
+    position:relative;
+  }
+  .tl-item::before {
+    content:''; position:absolute;
+    left:18px; top:36px; bottom:0; width:2px;
+    background:var(--border);
+  }
+  .tl-item:last-child::before { display:none; }
+  .tl-icon {
+    width:36px; height:36px; border-radius:50%;
+    background:#fff; border:2px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px; flex-shrink:0; z-index:1;
+  }
+  .tl-text h4 { font-size:13px; font-weight:700; color:var(--ink); }
+  .tl-text p  { font-size:12px; color:var(--light); margin-top:2px; line-height:1.4; }
+
+  /* CERTS */
+  .cert-wrap { display:flex; flex-wrap:wrap; gap:8px; padding:0 16px; }
+  .cert {
+    background:#fff; border:1px solid var(--border);
+    border-radius:8px; padding:6px 11px;
+    font-size:12px; font-weight:700; color:var(--ink);
+    display:flex; align-items:center; gap:5px;
+  }
+  .cert span { font-size:15px; }
+
+  /* MATERIALI */
+  .mat-table { width:100%; border-collapse:collapse; font-size:12px; }
+  .mat-table th {
+    background:var(--ink); color:#fff;
+    padding:8px 12px; text-align:left;
+    font-size:10px; letter-spacing:0.5px; text-transform:uppercase;
+  }
+  .mat-table td {
+    padding:9px 12px; border-bottom:1px solid var(--border);
+    color:var(--mid); vertical-align:top;
+  }
+  .mat-table tr:last-child td { border-bottom:none; }
+  .mat-table tr:nth-child(even) td { background:#faf9f6; }
+  .ok { color:var(--green); font-weight:700; }
+
+  /* FOOTER */
+  footer {
+    background:var(--ink); padding:20px 16px;
+    text-align:center; margin-top:24px;
+  }
+  footer p { color:rgba(255,255,255,0.45); font-size:11px; line-height:1.6; }
+  footer strong { color:var(--teal); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo">P</div>
+    <div class="brand-text">
+      <h1>PoltronAI S.r.l.</h1>
+      <p>Arredo · Design · Sostenibilità · Manzano (UD)</p>
+    </div>
+  </div>
+  <div class="product-badge">
+    <h2>Poltrona Relax Pro R1</h2>
+    <div class="sku">SKU: PAI-RPR1-2026</div>
+    <div class="reg-pill">⚖️ Reg. UE 1781/2024 · ESPR · DPP</div>
+  </div>
+</header>
+
+<!-- ID BAR -->
+<div class="id-bar">
+  <div class="id-cell">
+    <div class="id-label">Codice DPP</div>
+    <div class="id-val teal">DPP-PAI-2026-00142</div>
+  </div>
+  <div class="id-cell">
+    <div class="id-label">Emissione</div>
+    <div class="id-val">20 Marzo 2026</div>
+  </div>
+  <div class="id-cell">
+    <div class="id-label">Origine</div>
+    <div class="id-val">🇮🇹 Made in Italy</div>
+  </div>
+  <div class="id-cell">
+    <div class="id-label">Garanzia ricambi</div>
+    <div class="id-val">10 anni</div>
+  </div>
+</div>
+
+<!-- KPI -->
+<div class="section">
+  <div class="section-title">Indicatori di Sostenibilità</div>
+</div>
+<div class="kpi-grid">
+  <div class="kpi k1">
+    <div class="kpi-val">87,4<small style="font-size:14px;font-weight:500"> kg</small></div>
+    <div class="kpi-lbl">CO₂eq / unità<br>ISO 14067 scope 1–3</div>
+  </div>
+  <div class="kpi k2">
+    <div class="kpi-val">74<small style="font-size:14px;font-weight:500">%</small></div>
+    <div class="kpi-lbl">Riciclabilità<br>post-consumo</div>
+  </div>
+  <div class="kpi k3">
+    <div class="kpi-val">28<small style="font-size:14px;font-weight:500">%</small></div>
+    <div class="kpi-lbl">Contenuto<br>riciclato</div>
+  </div>
+  <div class="kpi k4">
+    <div class="kpi-val">≥15<small style="font-size:14px;font-weight:500"> aa</small></div>
+    <div class="kpi-lbl">Vita media<br>stimata</div>
+  </div>
+</div>
+
+<!-- REQUISITI PRESTAZIONALI -->
+<div class="section">
+  <div class="section-title">Requisiti Prestazionali</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="icon icon-teal">⚙️</div>
+      <h3>Durabilità e Materiali</h3>
+    </div>
+    <div class="card-body">
+      <div class="item"><span class="dot" style="background:var(--teal)"></span><span><b>Struttura:</b> faggio FSC + acciaio EAF, vita media ≥ 15 anni</span></div>
+      <div class="item"><span class="dot" style="background:var(--teal)"></span><span><b>Modularità:</b> gambe, schienale, motore smontabili con utensili standard</span></div>
+      <div class="item"><span class="dot" style="background:var(--teal)"></span><span><b>Riciclato:</b> 28% rPET nei cuscini, 18% acciaio da fonti riciclate</span></div>
+      <div class="item"><span class="dot" style="background:var(--teal)"></span><span><b>Zero SVHC:</b> tessuti Oeko-Tex 100, no COV, no sostanze REACH</span></div>
+      <div class="item"><span class="dot" style="background:var(--teal)"></span><span><b>Packaging:</b> 100% carta riciclata, no EPS, reggette in carta compostabile</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- REQUISITI INFORMAZIONE -->
+<div class="section">
+  <div class="section-title">Requisiti di Informazione</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="icon icon-amber">ℹ️</div>
+      <h3>Origine e Istruzioni</h3>
+    </div>
+    <div class="card-body">
+      <div class="item"><span class="dot" style="background:var(--amber)"></span><span><b>Materie prime:</b> faggio Austria/Germania, cotone GOTS Turchia, rPET Europa</span></div>
+      <div class="item"><span class="dot" style="background:var(--amber)"></span><span><b>Istruzioni:</b> montaggio, uso dispositivo elettrico, manutenzione ogni 5 anni, smontaggio fine vita</span></div>
+      <div class="item"><span class="dot" style="background:var(--amber)"></span><span><b>Carbon footprint:</b> 87,4 kg CO₂eq (ISO 14067) · 12 alberi piantati per unità venduta</span></div>
+      <div class="item"><span class="dot" style="background:var(--amber)"></span><span><b>Fine vita:</b> servizio take-back gratuito PoltronAI · 74% componenti riciclabili</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- MATERIALI -->
+<div class="section">
+  <div class="section-title">Composizione Materiali</div>
+  <div class="card" style="overflow:auto">
+    <table class="mat-table">
+      <thead>
+        <tr>
+          <th>Componente</th>
+          <th>Materiale</th>
+          <th>Origine</th>
+          <th>SVHC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><b>Struttura</b></td><td>Faggio + acciaio</td><td>🇦🇹🇩🇪</td><td class="ok">✓</td></tr>
+        <tr><td><b>Imbottitura</b></td><td>Schiuma HR PU</td><td>🇮🇹</td><td class="ok">✓</td></tr>
+        <tr><td><b>Rivestimento</b></td><td>Poliestere rPET</td><td>🇹🇷</td><td class="ok">✓</td></tr>
+        <tr><td><b>Meccanismo</b></td><td>Motore DC 24V</td><td>🇩🇪</td><td class="ok">✓ RoHS</td></tr>
+        <tr><td><b>Gambe</b></td><td>Faggio tornito</td><td>🇮🇹 UD</td><td class="ok">✓</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- CICLO DI VITA -->
+<div class="section">
+  <div class="section-title">Ciclo di Vita</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-icon">🌳</div>
+      <div class="tl-text"><h4>Materie Prime</h4><p>Legno FSC Austria/Germania · rPET Europa · cotone GOTS Turchia</p></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-icon">🏭</div>
+      <div class="tl-text"><h4>Produzione</h4><p>Manzano (UD) · energia rinnovabile · ISO 14001:2015</p></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-icon">📦</div>
+      <div class="tl-text"><h4>Distribuzione</h4><p>Packaging 100% carta riciclata · no plastica · no EPS</p></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-icon">🛋️</div>
+      <div class="tl-text"><h4>Uso</h4><p>Vita media ≥ 15 anni · ricambi garantiti 10 anni · riparabile</p></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-icon">♻️</div>
+      <div class="tl-text"><h4>Fine Vita</h4><p>74% riciclabile · ritiro gratuito · take-back PoltronAI</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- CERTIFICAZIONI -->
+<div class="section">
+  <div class="section-title">Certificazioni</div>
+  <div class="cert-wrap" style="padding:0 16px 16px">
+    <div class="cert"><span>🌲</span> FSC CdC</div>
+    <div class="cert"><span>🌿</span> GOTS</div>
+    <div class="cert"><span>♻️</span> GRS</div>
+    <div class="cert"><span>🧵</span> Oeko-Tex 100</div>
+    <div class="cert"><span>⚙️</span> ISO 9001:2015</div>
+    <div class="cert"><span>🍃</span> ISO 14001:2015</div>
+    <div class="cert"><span>🌡️</span> ISO 14067:2018</div>
+    <div class="cert"><span>💡</span> RoHS 2</div>
+    <div class="cert"><span>🇮🇹</span> Made in Italy</div>
+    <div class="cert"><span>⚖️</span> Reg. UE 1781/2024</div>
+  </div>
+</div>
+
+<!-- DOCUMENTAZIONE -->
+<div class="section">
+  <div class="section-title">Documentazione Tecnica</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="icon icon-purple">📋</div>
+      <h3>Archivio DPP Certificato</h3>
+    </div>
+    <div class="card-body">
+      <div class="item"><span class="dot" style="background:var(--purple)"></span><span><b>Schede tecniche:</b> BOM completo, disegni 3D CAD, SDS per ogni materiale (PDF/A + IFC)</span></div>
+      <div class="item"><span class="dot" style="background:var(--purple)"></span><span><b>Fornitori:</b> questionari ESG RACH-CLP-ROHS compilati da tutti i fornitori tier-1</span></div>
+      <div class="item"><span class="dot" style="background:var(--purple)"></span><span><b>Made in Italy:</b> schemi di processo geolocalizzati + dichiarazione notarile di origine</span></div>
+      <div class="item"><span class="dot" style="background:var(--purple)"></span><span><b>Blockchain:</b> DPP archiviato su registro distribuito immutabile · hash: 0x4f2a…c91b</span></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p><strong>PoltronAI S.r.l.</strong> (azienda di fantasia)<br>
+  Simulazione DPP · Reg. UE 1781/2024 (ESPR)<br>
+  Settimana della Sostenibilità · Confindustria Veneto Est · 20 marzo 2026</p>
+</footer>
+
+</body>
+</html>
